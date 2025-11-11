@@ -6,15 +6,12 @@ ID: 110100110
 Username: bizvy001
 This is my own work as defined by the University's Academic Integrity Policy.
 '''
-from mammal import Mammal
-from bird import Bird
-from reptile import Reptile
 class HealthRecordClosedError(Exception):
     """Raised when trying to modify or access a closed health record."""
     pass
 
 class HealthRecord:
-    def __init__(self, name, species, age,  issue: str, severity: str, date_reported: str, treatment_notes: str, active = True):
+    def __init__(self,issue: str, severity: str, date_reported: str, treatment_notes: str, active = True):
         self.__issue = issue
         self.__severity = severity
         self.__date_reported = date_reported
@@ -48,8 +45,6 @@ class HealthRecord:
             raise ValueError("Notes must be a non-empty string.")
 
         self.__treatment_notes += f"\n{notes}"
-
-
 
     def __str__(self):
         status = "Active" if self.__active else "Closed"

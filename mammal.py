@@ -20,3 +20,4 @@ class Mammal(Animal):
     def is_nocturnal(self):
         return self.__is_nocturnal
 
+

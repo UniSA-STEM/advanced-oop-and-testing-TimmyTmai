@@ -9,13 +9,16 @@ This is my own work as defined by the University's Academic Integrity Policy.
 from abc import ABC, abstractmethod
 import uuid
 
+
 class Animal(ABC):
-    def __init__(self, name,species, age, diet):
+    def __init__(self, name: str, species: str, age: int, diet: str, environment: str, is_healthy = True):
         self._id = uuid.uuid4()
         self.__name = name
         self.__species = species
         self.__age = age
         self.__diet = diet
+        self.__environment = environment
+        self.__healthy = is_healthy
 
     def eat(self):
         return f"{self.__name} is eating {self.__diet}."
@@ -42,4 +45,9 @@ class Animal(ABC):
     @property
     def diet(self):
         return self.__diet
-
+    @property
+    def is_healthy(self):
+        return self.__healthy
+    @property
+    def environment(self):
+        return self.__environment

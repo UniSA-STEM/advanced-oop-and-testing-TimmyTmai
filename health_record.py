@@ -6,18 +6,23 @@ ID: 110100110
 Username: bizvy001
 This is my own work as defined by the University's Academic Integrity Policy.
 '''
+import uuid
 class HealthRecordClosedError(Exception):
     """Raised when trying to modify or access a closed health record."""
     pass
 
 class HealthRecord:
     def __init__(self,issue: str, severity: str, date_reported: str, treatment_notes: str, active = True):
+        self._id = uuid.uuid4()
         self.__issue = issue
         self.__severity = severity
         self.__date_reported = date_reported
         self.__treatment_notes = treatment_notes
         self.__active = active
 
+    @property
+    def id(self):
+        return self._id
     @property
     def issue(self):
         return self.__issue

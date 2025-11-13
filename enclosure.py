@@ -7,6 +7,8 @@ Username: bizvy001
 This is my own work as defined by the University's Academic Integrity Policy.
 '''
 from animal import Animal
+from reptile import Reptile
+
 
 class Enclosure:
     def __init__(self, size: int, environment: str):
@@ -24,7 +26,7 @@ class Enclosure:
 
     @property
     def animals(self) -> list[Animal]:
-        return list(self.__list_animal)  # copy to protect internals
+        return list(self.__list_animal)
 
     @property
     def clean_level(self) -> int:
@@ -39,9 +41,12 @@ class Enclosure:
         return len(self.__list_animal) >= self.__capacity
 
     def is_compatible(self, animal: Animal) -> bool:
-        same_species = (self.__enclosure_species == animal.species() or self.__enclosure_species is None)
-        same_environment = animal.environment().lower() == self.__environment.lower()
-        return same_species and same_environment
+        same_environment = animal.environment.lower() == self.__environment.lower()
+        same_species = (
+                self.__enclosure_species is None
+                or animal.species.lower() == self.__enclosure_species.lower()
+        )
+        return same_environment and same_species
 
     # ---- Core API ----
     def add_animal(self, animal) -> bool:
@@ -50,7 +55,7 @@ class Enclosure:
         Raises TypeError if 'animal' isn't an Animal.
         """
         if not isinstance(animal, Animal):
-            raise TypeError("'animal' must be an Animal class.")
+            raise TypeError(f"{animal} must be an Animal class.")
 
         if self._is_full():
             print("Enclosure already full")
@@ -58,6 +63,7 @@ class Enclosure:
 
         if self.is_compatible(animal):
             self.__list_animal += [animal]
+            print(f"Added {animal.name} to the enclosure.")
             return True
         else:
             print("Enclosure not compatible")
@@ -98,4 +104,3 @@ class Enclosure:
             f"List animal: {self.animal_names()}\n"
             f"Number of animals: {len(self.__list_animal)}\n"
         )
-

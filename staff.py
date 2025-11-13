@@ -40,12 +40,24 @@ class Staff(ABC):
     def assigned_animal(self):
         return list(self._assigned_animal)
 
-    def assign_enclosure(self, enclosure: Enclosure):
+    def assign_enclosure(self, enclosure):
+        if not isinstance(enclosure, Enclosure):
+            raise TypeError(f"{enclosure} must be an Enclosure class.")
+
+        if self.__role.lower() != "zookeeper":
+            raise TypeError(f"Only zookeeper roles are allowed.")
+
         if enclosure not in self._assigned_enclosure and self.__active == True:
             self._assigned_enclosure.append(enclosure)
 
 
-    def assign_animal(self, animal: Animal):
+    def assign_animal(self, animal):
+        if not isinstance(animal, Animal):
+            raise TypeError(f"{animal} must be an Animal class.")
+
+        if self.__role.lower() != "veterinarian":
+            raise TypeError(f"Only veterinarian roles are allowed.")
+
         if animal not in self._assigned_animal and self.__active == True:
             self._assigned_animal.append(animal)
 
@@ -56,9 +68,9 @@ class Staff(ABC):
         for a in self._assigned_animal:
             self._assigned_animal.remove(a)
 
-    ''''@abstractmethod
-    def perform_task(self):
-        pass'''
+    @abstractmethod
+    def perform_task(self, task):
+        pass
 
     def __str__(self):
         if self.__active:

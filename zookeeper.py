@@ -6,3 +6,31 @@ ID: 110100110
 Username: bizvy001
 This is my own work as defined by the University's Academic Integrity Policy.
 '''
+from enclosure import Enclosure
+from reptile import Reptile
+from staff import Staff
+from abc import ABC, abstractmethod
+
+class Zookeeper(Staff):
+    def __init__(self, name):
+        super().__init__(name, "Zookeeper")
+
+    def perform_task(self, task):
+        if task.lower() == "clean":
+            for enclosure in self._assigned_enclosure:
+                enclosure.clean_enclosure()
+            print("Cleaned all enclosures.")
+
+        if task.lower() == "feed":
+            for animal in self._assigned_animal:
+                animal.eat()
+            print("Fed all animals.")
+
+tom = Zookeeper("Tom")
+
+enclosure1 = Enclosure(500,"Aquatic")
+tom.assign_enclosure(enclosure1)
+alligator = Reptile("Mr.A","Alligator",20, "meat", "Aquatic")
+tom.assign_enclosure(enclosure1)
+enclosure1.add_animal(alligator)
+tom.perform_task("feed")

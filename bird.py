@@ -19,3 +19,6 @@ class Bird(Animal):
     @property
     def can_fly(self):
         return self.__can_fly
+
+    def __str__(self):
+        return super().__str__()

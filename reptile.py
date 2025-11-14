@@ -19,3 +19,6 @@ class Reptile(Animal):
     @property
     def is_venomous(self):
         return self.__is_venomous
+
+    def __str__(self):
+        return super().__str__()

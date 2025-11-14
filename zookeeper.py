@@ -15,16 +15,24 @@ class Zookeeper(Staff):
     def __init__(self, name):
         super().__init__(name, "Zookeeper")
 
-    def perform_task(self, task):
-        if task.lower() == "clean":
-            for enclosure in self._assigned_enclosure:
-                enclosure.clean_enclosure()
-            print("Cleaned all enclosures.")
+    def perform_task(self, value):
+        tasks = ["clean", "feed"]
+        value = value.lower().strip()
+        if not value:
+            raise ValueError(f"Please assign task.")
+        if value.lower() not in tasks:
+            raise ValueError(f"Cannot perform task {value}.")
 
-        if task.lower() == "feed":
-            for animal in self._assigned_animal:
-                animal.eat()
-            print("Fed all animals.")
+        for value in tasks:
+            if value == "clean":
+                for enclosure in self._assigned_enclosure:
+                    enclosure.clean_enclosure()
+                print("Cleaned all enclosures.")
+
+            if value == "feed":
+                for animal in self._assigned_animal:
+                    animal.eat()
+                print("Fed all animals.")
 
 tom = Zookeeper("Tom")
 

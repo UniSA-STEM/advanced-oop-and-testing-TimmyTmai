@@ -9,47 +9,36 @@ This is my own work as defined by the University's Academic Integrity Policy.
 from abc import ABC, abstractmethod
 import uuid
 
+import helper
+
 
 class Animal(ABC):
-    def __init__(self, name: str, species: str, age: int, diet: str, environment: str, is_healthy = True):
+    def __init__(self, name, species, age, diet, environment, is_healthy):
         self._id = uuid.uuid4()
-        self.__name = self._validate_string(name, "name")
-        self.__species = self._validate_string(species, "species")
-        self.__age = self._validate_age(age)
-        self.__diet = self._validate_string(diet, "diet")
-        self.__environment = self._validate_string(environment, "environment")
-        self.__healthy = self._validate_bool(is_healthy, "is_healthy")
-
-    def _validate_string(self, value, field_name):
-        """Check if a string is valid (not empty, correct type)."""
-        if not isinstance(value, str):
-            raise TypeError(f"{field_name} must be a string.")
-        value = value.strip()
-        if not value:
-            raise ValueError(f"{field_name} cannot be empty.")
-        return value
-
-    def _validate_age(self, value):
-        """Ensure age is a positive integer and within reasonable range."""
-        if not isinstance(value, int):
-            raise TypeError("Age must be an integer.")
-        if value < 0:
-            raise ValueError("Age cannot be negative.")
-        if value > 250:
-            raise ValueError("Age seems unrealistic (over 250).")
-        return value
-
-    def _validate_bool(self, value, field_name):
-        """Ensure boolean fields are actually bool types."""
-        if not isinstance(value, bool):
-            raise TypeError(f"{field_name} must be a boolean (True/False).")
-        return value
+        if (
+            helper.validate_string(name, "name")
+            and helper.validate_string(species, "species")
+            and helper.validate_age(age)
+            and helper.validate_string(diet, "diet")
+            and helper.validate_string(environment, "environment")
+            and helper.validate_bool(is_healthy, "is_healthy")
+        ):
+            self.__name = name
+            self.__species = species
+            self.__age = age
+            self.__diet = diet
+            self.__environment = environment
+            self.__is_healthy = is_healthy
 
     def eat(self):
         return f"{self.__name} is eating {self.__diet}."
 
     def sleep(self):
         return f"{self.__name} curls up and sleeps."
+
+    def heal(self):
+        self.__is_healthy = True
+
 
     @abstractmethod
     def make_sound(self):
@@ -72,7 +61,16 @@ class Animal(ABC):
         return self.__diet
     @property
     def is_healthy(self):
-        return self.__healthy
+        return self.__is_healthy
     @property
     def environment(self):
         return self.__environment
+
+    def __str__(self):
+        return (f"Animal name: {self.__name}\n"
+                f"Animal species: {self.__species}\n"
+                f"Animal age: {self.__age}\n"
+                f"Animal diet: {self.__diet}\n"
+                f"Animal environment: {self.__environment}\n"
+                f"Animal is healthy: {self.__is_healthy}\n"
+                )

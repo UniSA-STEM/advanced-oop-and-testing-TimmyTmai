@@ -23,22 +23,17 @@ class Staff(ABC):
        self._assigned_enclosure = []
        self._assigned_animal = []
 
+    def _validate_role(self, value):
+        roles = [
+            "zookeeper", "veterinarian"]
+        value = value.strip()
+        if not value:
+            raise ValueError(f"Please input role for staff.")
+        if value.lower() not in roles:
+            raise ValueError(f"There is no role {value}.")
+        return value
 
-    @property
-    def id(self):
-        return self._id
-    @property
-    def name(self):
-        return self.__name
-    @property
-    def role(self):
-        return self.__role
-    @property
-    def assigned_enclosure(self):
-        return list(self._assigned_enclosure)
-    @property
-    def assigned_animal(self):
-        return list(self._assigned_animal)
+
 
     def assign_enclosure(self, enclosure):
         if not isinstance(enclosure, Enclosure):
@@ -71,6 +66,22 @@ class Staff(ABC):
     @abstractmethod
     def perform_task(self, task):
         pass
+
+    @property
+    def id(self):
+        return self._id
+    @property
+    def name(self):
+        return self.__name
+    @property
+    def role(self):
+        return self.__role
+    @property
+    def assigned_enclosure(self):
+        return list(self._assigned_enclosure)
+    @property
+    def assigned_animal(self):
+        return list(self._assigned_animal)
 
     def __str__(self):
         if self.__active:

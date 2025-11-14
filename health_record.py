@@ -7,18 +7,30 @@ Username: bizvy001
 This is my own work as defined by the University's Academic Integrity Policy.
 '''
 import uuid
+import helper
+
+
 class HealthRecordClosedError(Exception):
     """Raised when trying to modify or access a closed health record."""
     pass
 
 class HealthRecord:
-    def __init__(self,issue: str, severity: str, date_reported: str, treatment_notes: str, active = True):
+    def __init__(self, issue, severity, date_reported, treatment_notes, active):
         self._id = uuid.uuid4()
-        self.__issue = issue
-        self.__severity = severity
-        self.__date_reported = date_reported
-        self.__treatment_notes = treatment_notes
-        self.__active = active
+        if (
+                helper.validate_string(issue, "issue")
+                and helper.validate_level(severity, "severity")
+                and helper.validate_date(date_reported, "date_reported")
+                and helper.validate_bool(active, "active")
+                and helper.validate_string(treatment_notes, "treatment_notes")
+        ):
+            self.__issue = issue
+            self.__severity = severity
+            self.__date_reported = date_reported
+            self.__treatment_notes = treatment_notes
+            self.__active = active
+        else:
+            raise ValueError(f"Input error.")
 
     @property
     def id(self):
@@ -53,7 +65,11 @@ class HealthRecord:
 
     def __str__(self):
         status = "Active" if self.__active else "Closed"
-        return f"[{status}] {self.__issue} (Severity: {self.__severity})"
+        return (f"[{status}] {self.__issue} (Severity: {self.__severity})\n"
+                f"Date reported: {self.__date_reported}\n"
+                f"Treatment notes: {self.__treatment_notes}\n")
 
 
+record = HealthRecord("Sick", None, "15/11/2025", "abc", True)
+print(record)
 

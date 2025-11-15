@@ -70,3 +70,24 @@ def validate_age(value):
         return False
     else:
         return True
+
+
+VALID_ENVIRONMENTS = [
+    "aquatic",
+    "savannah",
+    "jungle",
+    "arctic",
+    "desert",
+    "forest",
+    "mountain",
+    "grassland"
+]
+
+def validate_environment(value, field_name="environment"):
+    """Ensure environment is a recognized type."""
+    if not isinstance(value, str):
+        raise TypeError(f"{field_name} must be a string.")
+    value = value.strip().lower()
+    if value not in VALID_ENVIRONMENTS:
+        raise ValueError(f"{field_name} must be one of {VALID_ENVIRONMENTS}")
+    return value

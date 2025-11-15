@@ -42,10 +42,6 @@ class Animal(ABC):
     def sleep(self):
         return f"{self.__name} curls up and sleeps."
 
-    def heal(self):
-        self.__is_healthy = True
-
-
     @abstractmethod
     def make_sound(self):
         pass
@@ -71,6 +67,12 @@ class Animal(ABC):
     @property
     def environment(self):
         return self.__environment
+
+    @is_healthy.setter
+    def is_healthy(self, value):
+        if not isinstance(value, bool):
+            raise TypeError("is_healthy must be a boolean value.")
+        self.__is_healthy = value
 
     def __str__(self):
         return (f"--- ANIMAL INFORMATION ---\n"

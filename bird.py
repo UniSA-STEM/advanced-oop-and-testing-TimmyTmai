@@ -14,11 +14,11 @@ class Bird(Animal):
         self.__can_fly = can_fly
 
     def make_sound(self):
-        return f"{self.__name} chirps or sings"
+        return f"{self.name} chirps or sings"
 
     @property
     def can_fly(self):
         return self.__can_fly
 
     def __str__(self):
-        return super().__str__()
+        return super().__str__() + f"Can fly: {self.__can_fly}\n"

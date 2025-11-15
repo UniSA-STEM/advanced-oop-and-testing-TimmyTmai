@@ -8,60 +8,65 @@ This is my own work as defined by the University's Academic Integrity Policy.
 '''
 from abc import ABC, abstractmethod
 import uuid
+
+import helper
 from enclosure import Enclosure
 
 from animal import Animal
 from enclosure import Enclosure
-
+import helper
 
 class Staff(ABC):
-    def __init__(self, name, role):
-       self._id = uuid.uuid4()
-       self.__name = name
-       self.__role = role
-       self.__active = True
-       self._assigned_enclosure = []
-       self._assigned_animal = []
+    def __init__(self, name: str, role: str):
+        self._id = uuid.uuid4()
+        self.__name = helper.validate_string(name, "Staff name")
+        self.__role = self._validate_role(role)
+        self.__active = True
+        self._assigned_enclosure: list[Enclosure] = []
+        self._assigned_animal: list[Animal] = []
 
-    def _validate_role(self, value):
-        roles = [
-            "zookeeper", "veterinarian"]
+    def _validate_role(self, value) -> str:
+        roles = ["zookeeper", "veterinarian"]
+        if not isinstance(value, str):
+            raise TypeError("role must be a string.")
         value = value.strip()
         if not value:
-            raise ValueError(f"Please input role for staff.")
+            raise ValueError("Please input role for staff.")
         if value.lower() not in roles:
-            raise ValueError(f"There is no role {value}.")
-        return value
+            raise ValueError(f"There is no role '{value}'. Allowed: {roles}")
+        return value.lower()
 
 
+    def assign_enclosure(self, enclosure) -> None:
+        if not self.__active:
+            raise RuntimeError("Cannot assign enclosure: staff member is inactive.")
 
-    def assign_enclosure(self, enclosure):
         if not isinstance(enclosure, Enclosure):
-            raise TypeError(f"{enclosure} must be an Enclosure class.")
+            raise TypeError(f"{enclosure} must be an Enclosure instance.")
 
-        if self.__role.lower() != "zookeeper":
-            raise TypeError(f"Only zookeeper roles are allowed.")
+        if self.__role != "zookeeper":
+            raise PermissionError("Only staff with role 'zookeeper' can be assigned enclosures.")
 
-        if enclosure not in self._assigned_enclosure and self.__active == True:
+        if enclosure not in self._assigned_enclosure:
             self._assigned_enclosure.append(enclosure)
 
+    def assign_animal(self, animal) -> None:
+        if not self.__active:
+            raise RuntimeError("Cannot assign animal: staff member is inactive.")
 
-    def assign_animal(self, animal):
         if not isinstance(animal, Animal):
-            raise TypeError(f"{animal} must be an Animal class.")
+            raise TypeError(f"{animal} must be an Animal instance.")
 
-        if self.__role.lower() != "veterinarian":
-            raise TypeError(f"Only veterinarian roles are allowed.")
+        if self.__role != "veterinarian":
+            raise PermissionError("Only staff with role 'veterinarian' can be assigned animals.")
 
-        if animal not in self._assigned_animal and self.__active == True:
+        if animal not in self._assigned_animal:
             self._assigned_animal.append(animal)
 
-    def deactivate(self):
+    def deactivate(self) -> None:
         self.__active = False
-        for e in self._assigned_enclosure:
-            self._assigned_enclosure.remove(e)
-        for a in self._assigned_animal:
-            self._assigned_animal.remove(a)
+        self._assigned_enclosure.clear()
+        self._assigned_animal.clear()
 
     @abstractmethod
     def perform_task(self, task):

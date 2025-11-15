@@ -14,14 +14,12 @@ class Mammal(Animal):
         self.__is_nocturnal = is_nocturnal
 
     def make_sound(self):
-        return f"{self.__name} makes a mammal-like sound."
+        return f"{self.name} makes a mammal-like sound."
 
     @property
     def is_nocturnal(self):
         return self.__is_nocturnal
 
     def __str__(self):
-        return super().__str__()
+        return super().__str__() + f"Is nocturnal: {self.__is_nocturnal}\n"
 
-leo = Mammal("Leo", "Lion", 20, "meat", "Safari", True, False)
-print(leo)

@@ -14,11 +14,11 @@ class Reptile(Animal):
         self.__is_venomous = is_venomous
 
     def make_sound(self):
-        return f"{self.__name} hisses."
+        return f"{self.name} hisses."
 
     @property
     def is_venomous(self):
         return self.__is_venomous
 
     def __str__(self):
-        return super().__str__()
+        return super().__str__() + f"Is venomous: {self.__is_venomous}\n"

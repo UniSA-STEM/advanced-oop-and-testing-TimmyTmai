@@ -9,8 +9,8 @@ This is my own work as defined by the University's Academic Integrity Policy.
 from animal import Animal
 
 class Bird(Animal):
-    def __init__(self, name, species, age, diet, environment, can_fly = True):
-        super().__init__(name, species, age, diet, environment)
+    def __init__(self, name, species, age, diet, environment,is_healthy, can_fly = True):
+        super().__init__(name,species, age, diet, environment, is_healthy)
         self.__can_fly = can_fly
 
     def make_sound(self):

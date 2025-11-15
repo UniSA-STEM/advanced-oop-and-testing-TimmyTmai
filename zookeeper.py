@@ -38,7 +38,7 @@ tom = Zookeeper("Tom")
 
 enclosure1 = Enclosure(500,"Aquatic")
 tom.assign_enclosure(enclosure1)
-alligator = Reptile("Mr.A","Alligator",20, "meat", "Aquatic")
+alligator = Reptile("Mr.A","Alligator",20, "meat", "Aquatic", True,True)
 tom.assign_enclosure(enclosure1)
 enclosure1.add_animal(alligator)
 tom.perform_task("feed")

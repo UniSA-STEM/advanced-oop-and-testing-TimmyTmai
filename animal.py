@@ -15,20 +15,26 @@ import helper
 class Animal(ABC):
     def __init__(self, name, species, age, diet, environment, is_healthy):
         self._id = uuid.uuid4()
-        if (
-            helper.validate_string(name, "name")
-            and helper.validate_string(species, "species")
-            and helper.validate_age(age)
-            and helper.validate_string(diet, "diet")
-            and helper.validate_string(environment, "environment")
-            and helper.validate_bool(is_healthy, "is_healthy")
-        ):
-            self.__name = name
-            self.__species = species
-            self.__age = age
-            self.__diet = diet
-            self.__environment = environment
-            self.__is_healthy = is_healthy
+        try:
+            if (
+                    helper.validate_string(name, "name")
+                    and helper.validate_string(species, "species")
+                    and helper.validate_age(age)
+                    and helper.validate_string(diet, "diet")
+                    and helper.validate_string(environment, "environment")
+                    and helper.validate_bool(is_healthy, "is_healthy")
+            ):
+                # only assign if all validations succeed
+                self.__name = name.strip()
+                self.__species = species.strip()
+                self.__age = age
+                self.__diet = diet.strip()
+                self.__environment = environment.strip()
+                self.__is_healthy = is_healthy
+            else:
+                raise ValueError("Invalid attribute values for Animal.")
+        except Exception as e:
+            print(f"Error creating Animal: {e}")
 
     def eat(self):
         return f"{self.__name} is eating {self.__diet}."
@@ -67,7 +73,8 @@ class Animal(ABC):
         return self.__environment
 
     def __str__(self):
-        return (f"Animal name: {self.__name}\n"
+        return (f"--- ANIMAL INFORMATION ---\n"
+                f"Animal name: {self.__name}\n"
                 f"Animal species: {self.__species}\n"
                 f"Animal age: {self.__age}\n"
                 f"Animal diet: {self.__diet}\n"

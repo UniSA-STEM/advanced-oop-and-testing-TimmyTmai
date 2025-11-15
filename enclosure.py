@@ -91,6 +91,13 @@ class Enclosure:
         self.__clean_level = 5
         print("Enclosure cleaned.")
 
+    def decrease_cleanliness(self):
+        self.__clean_level -= 1
+        if self.__clean_level <= 2:
+            for animal in self.__list_animal:
+                animal.is_healthy = False
+                print(f"{animal.name} has become sick due to dirty enclosure.")
+
     def animal_names(self) -> list[str]:
         return [a.name for a in self.__list_animal]
 

@@ -42,6 +42,9 @@ class Animal(ABC):
     def sleep(self):
         return f"{self.__name} curls up and sleeps."
 
+    def heal(self):
+        self.__is_healthy = True
+
     @abstractmethod
     def make_sound(self):
         pass

@@ -110,7 +110,7 @@ class Enclosure:
         )
 
     def __str__(self):
-        return (
+        return (f"--- ENCLOSURE INFORMATION ---\n"
             f"Enclosure type: {self.__environment}\n"
             f"Size: {self.__size}\n"
             f"Capacity: {self.__capacity}\n"

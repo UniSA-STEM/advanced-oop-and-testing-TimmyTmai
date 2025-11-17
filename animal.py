@@ -76,37 +76,30 @@ class Animal(ABC):
 
     @property
     def id(self):
-        """Unique identifier for this animal."""
         return self._id
 
     @property
     def name(self):
-        """Animal's name."""
         return self.__name
 
     @property
     def species(self):
-        """Animal's species."""
         return self.__species
 
     @property
     def age(self):
-        """Animal's age in years."""
         return self.__age
 
     @property
     def diet(self):
-        """Description of what the animal eats."""
         return self.__diet
 
     @property
     def is_healthy(self):
-        """True if the animal is currently healthy."""
         return self.__is_healthy
 
     @property
     def environment(self):
-        """The environment this animal belongs to (e.g. aquatic, savannah)."""
         return self.__environment
 
     @is_healthy.setter
@@ -132,3 +125,4 @@ class Animal(ABC):
             f"Animal diet: {self.__diet}\n"
             f"Animal environment: {self.__environment}\n"
             f"Animal is healthy: {self.__is_healthy}\n"
+        )

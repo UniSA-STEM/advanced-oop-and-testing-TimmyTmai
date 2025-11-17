@@ -1,93 +1,136 @@
+'''
+File: helper.py
+Description: Validation helper functions for the zoo management system.
+Author: Le Tuan Mai
+ID: 110439345
+Username: maily015
+'''
+
 from datetime import datetime
 
+
 def validate_string(value, field_name):
-    """Check if a string is valid (not empty, correct type)."""
+    """
+    Basic string validation: check type and make sure it's not empty.
+    """
     try:
+        # Must be a string type
         if not isinstance(value, str):
             raise TypeError(f"{field_name} must be a string.")
-        value = value.strip()
-        if not value:
+
+        # Remove leading/trailing spaces and ensure something remains
+        if not value.strip():
             raise ValueError(f"{field_name} cannot be empty.")
+
+        return True
+
     except (TypeError, ValueError) as e:
         print(f"Validation Error: {e}")
         return False
-    else:
-        return True
 
 
 def validate_level(value, field_name):
-    """Ensure level is one of low/medium/high."""
-    levels = ["low", "medium", "high"]
+    """
+    Validate severity level (low, medium, high).
+    """
+    allowed = ["low", "medium", "high"]
+
     try:
+        # First check if it's a valid string
         if not validate_string(value, field_name):
             raise ValueError(f"{field_name} failed string validation.")
-        value = value.lower().strip()
-        if value not in levels:
-            raise ValueError(f"{field_name} must be one of {levels}")
+
+        # Standardise for comparison
+        level = value.strip().lower()
+
+        # Check if it is one of the allowed choices
+        if level not in allowed:
+            raise ValueError(f"{field_name} must be one of {allowed}")
+
+        return True
+
     except (TypeError, ValueError) as e:
         print(f"Validation Error: {e}")
         return False
-    else:
-        return True
 
 
 def validate_date(value, field_name):
-    """Check if a date is valid (not empty, correct type, correct format)."""
+    """
+    Check if the date string is valid and matches DD/MM/YYYY format.
+    """
     try:
+        # Must be a proper string
         if not validate_string(value, field_name):
             raise ValueError(f"{field_name} failed string validation.")
+
+        # Try converting the string into a real datetime object
         datetime.strptime(value.strip(), "%d/%m/%Y").date()
+
+        return True
+
     except (TypeError, ValueError) as e:
         print(f"Validation Error: {e}")
         return False
-    else:
-        return True
 
 
 def validate_bool(value, field_name):
-    """Ensure boolean fields are actually bool types."""
+    """
+    Ensure a field is strictly a boolean (True/False).
+    """
     try:
+        # Python is strict here: only real booleans allowed
         if not isinstance(value, bool):
-            raise TypeError(f"{field_name} must be a boolean (True/False).")
+            raise TypeError(f"{field_name} must be a boolean.")
+        return True
+
     except TypeError as e:
         print(f"Validation Error: {e}")
         return False
-    else:
-        return True
 
 
 def validate_age(value):
-    """Ensure age is a positive integer and within reasonable range."""
+    """
+    Validate age: must be an integer, non-negative, and realistic.
+    """
     try:
+        # Age must be a number (int specifically)
         if not isinstance(value, int):
             raise TypeError("Age must be an integer.")
+
+        # No negative ages
         if value < 0:
             raise ValueError("Age cannot be negative.")
+
+        # Extremely large ages are unrealistic for animals
         if value > 250:
             raise ValueError("Age seems unrealistic (over 250).")
+
+        return True
+
     except (TypeError, ValueError) as e:
         print(f"Validation Error: {e}")
         return False
-    else:
-        return True
 
 
+# List of environments allowed for animal classes
 VALID_ENVIRONMENTS = [
-    "aquatic",
-    "savannah",
-    "jungle",
-    "arctic",
-    "desert",
-    "forest",
-    "mountain",
-    "grassland"
+    "aquatic", "savannah", "jungle", "arctic",
+    "desert", "forest", "mountain", "grassland"
 ]
 
+
 def validate_environment(value, field_name="environment"):
-    """Ensure environment is a recognized type."""
+    """
+    Check that the environment is one of the allowed choices.
+    """
+    # Must be a string because environment names are text
     if not isinstance(value, str):
         raise TypeError(f"{field_name} must be a string.")
-    value = value.strip().lower()
-    if value not in VALID_ENVIRONMENTS:
+
+    env = value.strip().lower()
+
+    # Check if environment exists in the predefined list
+    if env not in VALID_ENVIRONMENTS:
         raise ValueError(f"{field_name} must be one of {VALID_ENVIRONMENTS}")
-    return value
+
+    return env

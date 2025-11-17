@@ -1,6 +1,6 @@
 '''
-File: filename.py
-Description: A brief description of this Python module.
+File: veterinarian.py
+Description: Defines the Veterinarian class, a concrete Staff type.
 Author: Billy Bizilis
 ID: 110100110
 Username: bizvy001
@@ -11,19 +11,26 @@ from health_record import HealthRecord
 from staff import Staff
 from animal import Animal
 
+
 class Veterinarian(Staff):
-    def __init__(self, name):
+    """Veterinarian responsible for animal health, records, and treatment."""
+
+    def __init__(self, name: str):
+        """Create a veterinarian with the fixed role 'Veterinarian'."""
         super().__init__(name, "Veterinarian")
+        # Map each animal to a list of its health records
         self.__records: dict[Animal, list[HealthRecord]] = {}
 
-    def get_records(self, animal):
+    def get_records(self, animal) -> list[HealthRecord]:
+        """Return the list of health records for a given animal (create if absent)."""
         if not isinstance(animal, Animal):
             raise TypeError("'animal' must be an Animal class.")
         if animal not in self.__records:
             self.__records[animal] = []
         return self.__records[animal]
 
-    def generate_record(self, animal):
+    def generate_record(self, animal: Animal) -> HealthRecord:
+        """Interactively create a new health record for an assigned animal."""
         if animal not in self.assigned_animal:
             raise ValueError(f"{animal.name} is not assigned to {self.name}.")
 
@@ -37,33 +44,44 @@ class Veterinarian(Staff):
             issue=issue,
             severity=severity,
             date_reported=date,
-            treatment_notes= notes,
+            treatment_notes=notes,
             active=True,
         )
         self.get_records(animal).append(record)
         return record
 
-    def health_check(self):
+    def health_check(self) -> None:
+        """Go through all assigned animals and optionally create health records."""
         if not self.assigned_animal:
             print("No animals assigned for health check.")
             return
+
         for animal in self.assigned_animal:
             if animal.is_healthy:
                 print(f"{animal.name} ({animal.species}) is healthy.")
             else:
-                print(f"{animal.name} ({animal.species}) is not healthy. Do you want to create a record? (y/n)....")
-                choice = input().lower()
-                while choice != "y" and choice != "n":
+                print(
+                    f"{animal.name} ({animal.species}) is not healthy. "
+                    "Do you want to create a record? (y/n)..."
+                )
+                choice = input().strip().lower()
+
+                # Keep asking until user types y or n
+                while choice not in ("y", "n"):
                     print("'choice' must be 'y' or 'n'.")
-                    choice = input().lower()
+                    choice = input().strip().lower()
+
                 if choice == "y":
                     self.generate_record(animal)
-                elif choice == "n":
-                    continue
+                # if 'n', simply continue to the next animal
 
+    def record_report(self, animal: Animal | None = None) -> None:
+        """
+        Print health record reports.
 
-
-    def record_report(self, animal=None ):
+        If no animal is given, prints reports for all assigned animals.
+        """
+        # Report for all assigned animals
         if animal is None:
             if not self.assigned_animal:
                 print("No animals assigned to this veterinarian.")
@@ -82,9 +100,7 @@ class Veterinarian(Staff):
                             print("    " + line)
             return
 
-        if not isinstance(animal, Animal):
-            raise TypeError("'animal' must be an Animal class.")
-
+        # Report for a specific animal
         if animal not in self.assigned_animal:
             raise ValueError(f"{animal.name} is not assigned to {self.name}.")
 
@@ -92,19 +108,19 @@ class Veterinarian(Staff):
         if not records:
             print("No health records found for this animal.\n")
             return
+
         for i, record in enumerate(records):
             print(f"\nRecord [{i}]:\n")
             print(record)
 
-    def heal_animal(self, animal):
-        if not isinstance(animal, Animal):
-            raise TypeError("'animal' must be an Animal class.")
+    def heal_animal(self, animal: Animal) -> None:
+        """Heal a specific assigned animal and close any active records."""
 
         if animal not in self.assigned_animal:
             raise ValueError(f"{animal.name} is not assigned to {self.name}.")
 
         if animal.is_healthy:
-            print(f"{animal.name} ({animal.species}) is healthy no need treatment.")
+            print(f"{animal.name} ({animal.species}) is healthy, no treatment needed.")
             return
 
         animal.heal()
@@ -113,28 +129,34 @@ class Veterinarian(Staff):
         records = self.get_records(animal)
         for record in records:
             if record.active:
-                record.add_notes("Animal Treated and condition resolved.")
+                record.add_notes("Animal treated and condition resolved.")
                 record.close_record()
                 print(f"Record [{record.issue}] closed.")
         print(f"All active records for {animal.name} have been closed.")
 
-
-    def perform_task(self, value):
+    def perform_task(self, value: str) -> None:
+        """Perform a high-level task: 'health check', 'report', or 'heal'."""
         task = (value or "").strip().lower()
         if not task:
             raise ValueError("Please assign task.")
         if task not in ("health check", "report", "heal"):
-            raise ValueError(f"Cannot perform task '{value}'. Options: 'health check', 'report', 'heal'")
+            raise ValueError(
+                f"Cannot perform task '{value}'. Options: 'health check', 'report', 'heal'."
+            )
 
         if task == "health check":
             self.health_check()
+
         elif task == "report":
             self.record_report()
+
         elif task == "heal":
+            # Filter assigned animals that are currently sick
             sick_animals = [a for a in self.assigned_animal if not a.is_healthy]
             if not sick_animals:
                 print("All assigned animals are healthy. Nothing to heal.")
                 return
+
             print("\n--- Sick Animals ---")
             for i, animal in enumerate(sick_animals, start=1):
                 print(f"{i}. {animal.name} ({animal.species})")
@@ -151,5 +173,3 @@ class Veterinarian(Staff):
 
             animal_to_heal = sick_animals[choice - 1]
             self.heal_animal(animal_to_heal)
-            return
-

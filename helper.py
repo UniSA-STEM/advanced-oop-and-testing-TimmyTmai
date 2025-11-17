@@ -65,11 +65,14 @@ def validate_date(value, field_name):
 
         # Try converting the string into a real datetime object
         datetime.strptime(value.strip(), "%d/%m/%Y").date()
-
         return True
 
-    except (TypeError, ValueError) as e:
-        print(f"Validation Error: {e}")
+    except ValueError:
+        print(f"Validation Error: {field_name} must be in format DD/MM/YYYY (e.g., 25/12/2024).")
+        return False
+
+    except TypeError:
+        print(f"Validation Error: {field_name} must be a string representing a date.")
         return False
 
 

@@ -134,7 +134,7 @@ class Veterinarian(Staff):
         print(f"All active records for {animal.name} have been closed.")
 
     def perform_task(self, value: str) -> None:
-        """Perform a high-level task: 'health check', 'report', or 'heal'."""
+        """Perform a task: 'health check', 'report', or 'heal'."""
         task = (value or "").strip().lower()
         if not task:
             raise ValueError("Please assign task.")

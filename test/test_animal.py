@@ -4,6 +4,7 @@ Description: Tests for the abstract Animal base class.
 Author: Le Tuan Mai
 ID: 110439345
 Username: maily015
+This is my own work as defined by the University's Academic Integrity Policy.
 '''
 
 import pytest

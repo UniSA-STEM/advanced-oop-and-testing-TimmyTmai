@@ -168,6 +168,36 @@ class Zoo:
 
         return under_treatment
 
+    #Scheduler
+
+    def schedule_daily_feeding(self) -> None:
+        """Ask all zookeepers to feed their assigned enclosures."""
+        for staff_member in self.__staff:
+            if isinstance(staff_member, Zookeeper):
+                print(f"Zookeeper {staff_member.name} is feeding assigned enclosures...")
+                staff_member.perform_task("feed")
+
+    def schedule_daily_cleaning(self) -> None:
+        """Ask all zookeepers to clean their assigned enclosures."""
+        for staff_member in self.__staff:
+            if isinstance(staff_member, Zookeeper):
+                print(f"Zookeeper {staff_member.name} is cleaning assigned enclosures...")
+                staff_member.perform_task("clean")
+
+    def schedule_daily_health_checks(self) -> None:
+        """Ask all veterinarians to perform health checks."""
+        for staff_member in self.__staff:
+            if isinstance(staff_member, Veterinarian):
+                print(f"Veterinarian {staff_member.name} is checking assigned animals...")
+                staff_member.perform_task("health check")
+
+    def run_full_daily_schedule(self) -> None:
+        """Run a full daily routine in order."""
+        self.schedule_daily_feeding()
+        self.schedule_daily_cleaning()
+        self.schedule_daily_health_checks()
+
+
     def __str__(self):
         """Return a simple text summary of the zoo."""
         return (
@@ -176,36 +206,3 @@ class Zoo:
             f"Number of animals: {len(self.__animals)}\n"
             f"Number of enclosures: {len(self.__enclosures)}\n"
         )
-
-
-zoo = Zoo("Sydney Wildlife Park")
-
-# Staff
-zk = Zookeeper("Alice")
-vet = Veterinarian("Dr. Sarah")
-zoo.add_staff(zk)
-zoo.add_staff(vet)
-
-# Animals
-lion = Mammal("Simba", "Lion", 5, "Meat", "savannah", True)
-snake = Reptile("Serpant","Snake", 5, "egg", "jungle", False )
-zoo.add_animal(lion)
-zoo.add_animal(snake)
-
-# Enclosure
-sav = Enclosure(300, "savannah")
-jungle = Enclosure(300, "jungle")
-zoo.add_enclosure(sav)
-sav.add_animal(lion)
-zoo.add_enclosure(jungle)
-jungle.add_animal(snake)
-
-
-print(zoo)
-
-# Assign staff
-zk.assign_enclosure(sav)
-vet.assign_animal(lion)
-vet.assign_animal(snake)
-vet.perform_task("health check")
-zoo.get_health_records_for_animal(snake)

@@ -135,7 +135,7 @@ class Staff(ABC):
         """Readable summary of the staff member and their assignments."""
         active = "Active" if self.__active else "Inactive"
         return (
-            f"--- Staff INFORMATION ---\n"
+            f"--- STAFF INFORMATION ---\n"
             f"{self.__role} {self.__name} (ID: {self._id})\n"
             f"Assigned Enclosures: {[e.environment for e in self._assigned_enclosure]}\n"
             f"Assigned Animals: {[a.name for a in self._assigned_animal]}\n"

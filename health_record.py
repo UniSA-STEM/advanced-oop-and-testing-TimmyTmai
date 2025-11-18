@@ -38,7 +38,7 @@ class HealthRecord:
 
         # Validate all provided fields before assigning them
         if not (
-            helper.validate_string(issue, "issue")
+            helper.validate_issue(issue, "issue")
             and helper.validate_level(severity, "severity")
             and helper.validate_date(date_reported, "date_reported")
             and helper.validate_bool(active, "active")

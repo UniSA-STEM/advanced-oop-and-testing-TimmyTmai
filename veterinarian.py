@@ -1,12 +1,11 @@
 '''
 File: veterinarian.py
 Description: Defines the Veterinarian class, a concrete Staff type.
-Author: Billy Bizilis
-ID: 110100110
-Username: bizvy001
+Author: Le Tuan Mai
+ID: 110439345
+Username: maily015
 This is my own work as defined by the University's Academic Integrity Policy.
 '''
-
 from health_record import HealthRecord
 from staff import Staff
 from animal import Animal
@@ -34,7 +33,7 @@ class Veterinarian(Staff):
         if animal not in self.assigned_animal:
             raise ValueError(f"{animal.name} is not assigned to {self.name}.")
 
-        issue = input("Enter issue: ").strip()
+        issue = input("Enter issue (injuries/illness/behavioral concerns): ").strip()
         severity = input("Enter severity (low/medium/high): ").strip()
         date = input("Enter date (dd/mm/yyyy): ").strip()
         notes = input("Enter treatment notes: ").strip()

@@ -137,3 +137,21 @@ def validate_environment(value, field_name="environment"):
         raise ValueError(f"{field_name} must be one of {VALID_ENVIRONMENTS}")
 
     return env
+
+VALID_ISSUES = ["injuries", "illness", "behavioral concerns"]
+
+def validate_issue(value, field_name="issue"):
+    """
+    Check that the environment is one of the allowed choices.
+    """
+    # Must be a string because environment names are text
+    if not isinstance(value, str):
+        raise TypeError(f"{field_name} must be a string.")
+
+    iss = value.strip().lower()
+
+    # Check if environment exists in the predefined list
+    if iss not in VALID_ISSUES:
+        raise ValueError(f"{field_name} must be one of {VALID_ISSUES}")
+
+    return iss

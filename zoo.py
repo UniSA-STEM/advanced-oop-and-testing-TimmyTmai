@@ -11,8 +11,6 @@ import uuid
 
 import helper
 from animal import Animal
-from mammal import Mammal
-from reptile import Reptile
 from staff import Staff
 from zookeeper import Zookeeper
 from veterinarian import Veterinarian
@@ -206,3 +204,6 @@ class Zoo:
             f"Number of animals: {len(self.__animals)}\n"
             f"Number of enclosures: {len(self.__enclosures)}\n"
         )
+
+zoo = Zoo("Sydney Wildlife")
+zoo.run_full_daily_schedule()

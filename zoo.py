@@ -59,7 +59,7 @@ class Zoo:
 
         if staff_member not in self.__staff:
             self.__staff.append(staff_member)
-            print(f"Added staff member {staff_member.name} ({staff_member.role}) to {self.__name}.")
+            print(f"Added staff member {staff_member.name} ({staff_member.role}) to {self.__name}.\n")
 
     def remove_staff(self, staff_member: Staff) -> None:
         """Remove a staff member from the zoo."""
@@ -68,6 +68,7 @@ class Zoo:
         # Deactivate first to clear their assignments
         staff_member.deactivate()
         self.__staff.remove(staff_member)
+        print(f"Removed staff member {staff_member.name} ({staff_member.role}) from {self.__name}.\n")
 
     def add_animal(self, animal) -> None:
         """Add an animal to the zoo."""
@@ -75,7 +76,7 @@ class Zoo:
             raise TypeError("animal must be an Animal instance.")
         if animal not in self.__animals:
             self.__animals.append(animal)
-            print(f"Added animal {animal.name} to {self.__name}.")
+            print(f"Added animal {animal.name} to {self.__name}.\n")
 
     def remove_animal(self, animal: Animal) -> None:
         """Remove an animal from the zoo and from all enclosures."""
@@ -85,6 +86,7 @@ class Zoo:
         for enclosure in self.__enclosures:
             enclosure.remove_animal(animal)
         self.__animals.remove(animal)
+        print(f"Removed animal {animal.name} from {self.__name}.\n")
 
     def add_enclosure(self, enclosure) -> None:
         """Add an enclosure to the zoo."""
@@ -92,7 +94,7 @@ class Zoo:
             raise TypeError("enclosure must be an Enclosure instance.")
         if enclosure not in self.__enclosures:
             self.__enclosures.append(enclosure)
-            print(f"Added enclosure {enclosure.environment} to {self.__name}.")
+            print(f"Added enclosure {enclosure.environment} to {self.__name}.\n")
 
     def remove_enclosure(self, enclosure: Enclosure) -> None:
         """Remove an enclosure if it is empty."""

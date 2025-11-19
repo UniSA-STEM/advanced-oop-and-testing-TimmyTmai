@@ -4,6 +4,7 @@ Description: Unit tests for the Zoo class.
 Author: Le Tuan Mai
 ID: 110439345
 Username: maily015
+This is my own work as defined by the University's Academic Integrity Policy.
 '''
 
 import pytest

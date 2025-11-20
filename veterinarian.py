@@ -28,15 +28,20 @@ class Veterinarian(Staff):
             self.__records[animal] = []
         return self.__records[animal]
 
-    def generate_record(self, animal: Animal) -> HealthRecord:
+    def generate_record(self, animal: Animal, auto = False) -> HealthRecord:
         """Interactively create a new health record for an assigned animal."""
         if animal not in self.assigned_animal:
             raise ValueError(f"{animal.name} is not assigned to {self.name}.")
-
-        issue = input("Enter issue (injuries/illness/behavioral concerns): ").strip()
-        severity = input("Enter severity (low/medium/high): ").strip()
-        date = input("Enter date (dd/mm/yyyy): ").strip()
-        notes = input("Enter treatment notes: ").strip()
+        if not auto:
+            issue = input("Enter issue (injuries/illness/behavioral concerns): ").strip()
+            severity = input("Enter severity (low/medium/high): ").strip()
+            date = input("Enter date (dd/mm/yyyy): ").strip()
+            notes = input("Enter treatment notes: ").strip()
+        else: #Auto Input for easy testing
+            issue = "illness"
+            severity = "low"
+            date = "01/01/2002"
+            notes = "Auto Input for demo testing"
 
         record = HealthRecord(
             animal=animal,

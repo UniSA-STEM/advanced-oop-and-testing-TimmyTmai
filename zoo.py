@@ -147,11 +147,8 @@ class Zoo:
                 records = staff_member.get_records(animal)
                 all_records.extend(records)
 
-        if all_records is None:
-            print("No records found.")
-
-        for record in all_records:
-            print(record)
+        if not all_records:
+            print(f"No records found for {animal.name} ({animal.species}).\n")
 
         return all_records
 

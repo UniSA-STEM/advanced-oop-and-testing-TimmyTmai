@@ -72,15 +72,18 @@ samba = Mammal("Samba", "lion", 5, "meat", "Savannah", False)
 zoo.add_animal(samba)
 sav.add_animal(samba)
 vet.assign_animal(samba)
-#vet.perform_task("health check")
+vet.generate_record(samba, True)
+
 
 #Get records
 print("\nPulling Records for animal undertreatment....\n")
 zoo.animal_under_treatment()
 
+
 #Heal animal and close records
 vet.heal_animal(samba)
-zoo.animal_under_treatment()
+for i in zoo.get_health_records_for_animal(samba):
+    print(i)
 
 #deactive staff  and remove staff / animal from zoo
 print(zoo)

@@ -13,7 +13,7 @@ from animal import Animal
 class Reptile(Animal):
     """Represents a reptile in the zoo system."""
 
-    def __init__(self, name, species, age, diet, environment, is_healthy, is_venomous=True):
+    def __init__(self, name, species, age, diet, environment, is_healthy, is_venomous=False):
         """Create a Reptile with an optional venomous trait."""
         # Initialise shared animal attributes
         super().__init__(name, species, age, diet, environment, is_healthy)
@@ -23,7 +23,7 @@ class Reptile(Animal):
 
     def make_sound(self):
         """Return the typical sound associated with reptiles."""
-        return f"{self.name} hisses."
+        return f"{self.name} is making some sounds."
 
     @property
     def is_venomous(self):

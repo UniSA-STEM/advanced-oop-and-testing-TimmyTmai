@@ -58,11 +58,7 @@ class Animal(ABC):
         return f"{self.__name} curls up and sleeps."
 
     def heal(self):
-        """
-        Mark the animal as healthy again.
-
-        Useful when a vet or health record indicates the animal has recovered.
-        """
+        """Mark the animal as healthy again."""
         self.__is_healthy = True
 
     @abstractmethod

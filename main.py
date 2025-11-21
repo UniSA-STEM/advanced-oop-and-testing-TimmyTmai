@@ -6,14 +6,14 @@ ID: 110439345
 Username: maily015
 This is my own work as defined by the University's Academic Integrity Policy.
 '''
-from bird import Bird
+
 from zoo import Zoo
 from zookeeper import Zookeeper
 from veterinarian import Veterinarian
 from mammal import Mammal
 from reptile import Reptile
 from enclosure import Enclosure
-from health_record import HealthRecord
+
 
 #Creating zoo
 zoo = Zoo("Sydney Wildlife Park")
@@ -62,6 +62,7 @@ zk.assign_enclosure(sav)
 zk.assign_enclosure(jung)
 vet.assign_animal(leo)
 vet.assign_animal(croc)
+vet.display_animal()
 
 #Run daily schedule
 print("Performing daily tasks.... \n ")
@@ -79,6 +80,8 @@ vet.generate_record(samba, True)
 print("\nPulling Records for animal undertreatment....\n")
 zoo.animal_under_treatment()
 
+for i in zoo.get_health_records_for_animal(samba):
+    print(i)
 
 #Heal animal and close records
 vet.heal_animal(samba)

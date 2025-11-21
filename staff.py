@@ -36,7 +36,7 @@ class Staff(ABC):
         self._assigned_enclosure: list[Enclosure] = []
         self._assigned_animal: list[Animal] = []
 
-    def assign_enclosure(self, enclosure: Enclosure) -> None:
+    def assign_enclosure(self, enclosure) -> None:
         """
         Assign an enclosure to this staff member.
 
